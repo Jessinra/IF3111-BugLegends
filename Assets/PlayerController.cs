@@ -55,12 +55,14 @@ public class PlayerController : MonoBehaviour {
 
         } else if (Input.GetKey("space") && ableToAttack()) {
             attack();
+        } else if (Input.GetKey(KeyCode.LeftShift) && ableToAttack()) {
+            ultiAttack();
         }
     }
     private void move() {
 
         float moveHorizontal = Input.GetAxis("Horizontal");
-        Vector2 movement = new Vector2(moveHorizontal, 0);
+        Vector2 movement = new Vector2(moveHorizontal, -0.8F);
         rigidBody.velocity = movement * moveSpeed;
 
         animator.AnimateWalk();
@@ -98,6 +100,26 @@ public class PlayerController : MonoBehaviour {
             Instantiate(bugConfig.bugL,
                 bugConfig.bugSpawnPoint.position,
                 bugConfig.bugSpawnPoint.rotation);
+        }
+    }
+
+    private void ultiAttack() {
+        animator.AnimateAttack();
+        noMovement();
+
+        nextBug = Time.time + bugConfig.shotDelay;
+
+        for (int i = 0; i < 10; i++) {
+
+            if (direction == "right") {
+                Instantiate(bugConfig.bugR,
+                    bugConfig.bugSpawnPoint.position + new Vector3(i * 3, i * 3, 0),
+                    bugConfig.bugSpawnPoint.rotation);
+            } else {
+                Instantiate(bugConfig.bugL,
+                    bugConfig.bugSpawnPoint.position + new Vector3(i * -3, i * 3, 0),
+                    bugConfig.bugSpawnPoint.rotation);
+            }
         }
     }
 
@@ -213,7 +235,7 @@ public class PlatformConfig {
 
 public class PlayerAnimator {
     private string playerIdle = "dummy_idle_001";
-    private string playerWalk = "dummy_walk_001";
+    private string playerWalk = "dummy_run_001";
     private string playerJump = "dummy_jump_001";
     private string playerFall = "dummy_fall_001";
     private string playerAttack = "dummy_atk_punch_fast_001";
