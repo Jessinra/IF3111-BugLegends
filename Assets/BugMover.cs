@@ -24,8 +24,8 @@ public class BugMover : MonoBehaviour {
     void Update() {
 
         if (thisPower > 0) {
-            transform.Translate(Vector2.right * Time.deltaTime * speed * (thisPower / power) * isRight);
-            transform.Translate(Vector2.up * Time.deltaTime * speed * (thisPower / power));
+            transform.Translate(Vector2.right * Time.deltaTime * speed * thisPower / power * isRight);
+            transform.Translate(Vector2.up * Time.deltaTime * speed * thisPower / power);
             thisPower--;
         }
     }

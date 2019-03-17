@@ -37,23 +37,26 @@ public class PlayerController : MonoBehaviour {
         } else if (Input.GetKey("a") || Input.GetKey("d")) {
             move();
 
-        } else if (Input.GetKey("space") && ableToAttack()) {
-            attack();
-
-        } else if (Input.GetKeyDown("1")) {
-            print("build 1");
-
-        } else if (Input.GetKeyDown("2")) {
-            print("build 2");
-
-        } else if (Input.GetKeyDown("3")) {
-            print("build 3");
-
         } else if (Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
             idle();
         }
-    }
 
+        if (Input.GetKeyDown("1")) {
+            buildRoof();
+
+        } else if (Input.GetKeyDown("2")) {
+            buildFloor();
+
+        } else if (Input.GetKeyDown("3")) {
+            buildWall();
+
+        } else if (Input.GetKeyDown("4")) {
+            buildStair();
+
+        } else if (Input.GetKey("space") && ableToAttack()) {
+            attack();
+        }
+    }
     private void move() {
 
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -89,33 +92,62 @@ public class PlayerController : MonoBehaviour {
 
         if (direction == "right") {
             Instantiate(bugConfig.bugR,
-                bugConfig.bugSpawnPoint);
+                bugConfig.bugSpawnPoint.position,
+                bugConfig.bugSpawnPoint.rotation);
         } else {
             Instantiate(bugConfig.bugL,
-                bugConfig.bugSpawnPoint);
+                bugConfig.bugSpawnPoint.position,
+                bugConfig.bugSpawnPoint.rotation);
         }
     }
+
     private void buildRoof() {
+        animator.AnimateAttack();
         noMovement();
         nextRoof = Time.time + platformConfig.spawnRoofDelay;
 
         Instantiate(platformConfig.platformFlat,
-            platformConfig.platformRoofSpawnPoint);
+            platformConfig.platformRoofSpawnPoint.position,
+            platformConfig.platformRoofSpawnPoint.rotation);
     }
 
-    // private void build() {
-    //     noMovement();
-    //     next = Time.time + platformConfig.alskdfjl;
-    // }
+    private void buildFloor() {
+        animator.AnimateAttack();
+        noMovement();
+        nextFloor = Time.time + platformConfig.spawnFloorDelay;
 
-    // private void build() {
-    //     noMovement();
-    //     next = Time.time + platformConfig.alskdfjl;
-    // }
-    // private void build() {
-    //     noMovement();
-    //     next = Time.time + platformConfig.alskdfjl;
-    // }
+        Instantiate(platformConfig.platformFlat,
+            platformConfig.platformFloorSpawnPoint.position,
+            platformConfig.platformFloorSpawnPoint.rotation);
+    }
+
+    private void buildWall() {
+        animator.AnimateAttack();
+        noMovement();
+        nextWall = Time.time + platformConfig.spawnWallDelay;
+
+        Instantiate(platformConfig.platformWall,
+            platformConfig.platformWallSpawnPoint.position,
+            platformConfig.platformWallSpawnPoint.rotation);
+    }
+
+    private void buildStair() {
+        animator.AnimateAttack();
+        noMovement();
+        nextStair = Time.time + platformConfig.spawnStairDelay;
+
+        if (direction == "right") {
+
+            Instantiate(platformConfig.platformStairR,
+                platformConfig.platformStairSpawnPoint.position,
+                platformConfig.platformStairSpawnPoint.rotation);
+        } else {
+            Instantiate(platformConfig.platformStairL,
+                platformConfig.platformStairSpawnPoint.position,
+                platformConfig.platformStairSpawnPoint.rotation);
+        }
+
+    }
 
     private bool ableToAttack() {
         return Time.time > nextBug;
