@@ -5,11 +5,11 @@ using UnityEngine;
 public class BugMover : MonoBehaviour {
 
     [SerializeField] private float speed = 0.0F;
+    [SerializeField] private int isRight = 1;
+
     private Rigidbody2D rigidBody;
 
     public int power = 500;
-    public int isRight = 1;
-
     private int thisPower;
 
     // Start is called before the first frame update
@@ -24,8 +24,8 @@ public class BugMover : MonoBehaviour {
     void Update() {
 
         if (thisPower > 0) {
-            transform.Translate(Vector2.right * Time.deltaTime * speed * thisPower / power * isRight);
-            transform.Translate(Vector2.up * Time.deltaTime * speed * thisPower / power);
+            transform.Translate(Vector2.right * Time.deltaTime * speed * (thisPower / power) * isRight);
+            transform.Translate(Vector2.up * Time.deltaTime * speed * (thisPower / power));
             thisPower--;
         }
     }

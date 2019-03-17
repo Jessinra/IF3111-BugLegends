@@ -8,13 +8,20 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private DollInstance player = null;
     [SerializeField] private float moveSpeed = 3F;
     [SerializeField] private float jumpSpeed = 3F;
+
     [SerializeField] private BugConfig bugConfig = null;
+    [SerializeField] private PlatformConfig platformConfig = null;
 
     private Rigidbody2D rigidBody;
     private Transform transform;
     private PlayerAnimator animator;
     private string direction = "right";
-    private float nextShot = 0.0F;
+
+    private float nextBug = 0.0F;
+    private float nextWall = 0.0F;
+    private float nextFloor = 0.0F;
+    private float nextRoof = 0.0F;
+    private float nextStair = 0.0F;
 
     void Start() {
         rigidBody = player.GetComponent<Rigidbody2D>();
@@ -78,21 +85,52 @@ public class PlayerController : MonoBehaviour {
         animator.AnimateAttack();
         noMovement();
 
-        nextShot = Time.time + bugConfig.shotDelay;
+        nextBug = Time.time + bugConfig.shotDelay;
 
         if (direction == "right") {
             Instantiate(bugConfig.bugR,
-                bugConfig.bugSpawnPoint.position,
-                bugConfig.bugSpawnPoint.rotation);
+                bugConfig.bugSpawnPoint);
         } else {
             Instantiate(bugConfig.bugL,
-                bugConfig.bugSpawnPoint.position,
-                bugConfig.bugSpawnPoint.rotation);
+                bugConfig.bugSpawnPoint);
         }
     }
+    private void buildRoof() {
+        noMovement();
+        nextRoof = Time.time + platformConfig.spawnRoofDelay;
+
+        Instantiate(platformConfig.platformFlat,
+            platformConfig.platformRoofSpawnPoint);
+    }
+
+    // private void build() {
+    //     noMovement();
+    //     next = Time.time + platformConfig.alskdfjl;
+    // }
+
+    // private void build() {
+    //     noMovement();
+    //     next = Time.time + platformConfig.alskdfjl;
+    // }
+    // private void build() {
+    //     noMovement();
+    //     next = Time.time + platformConfig.alskdfjl;
+    // }
 
     private bool ableToAttack() {
-        return Time.time > nextShot;
+        return Time.time > nextBug;
+    }
+    private bool ableToBuildRoof() {
+        return Time.time > nextRoof;
+    }
+    private bool ableToBuildFloor() {
+        return Time.time > nextFloor;
+    }
+    private bool ableToBuildWall() {
+        return Time.time > nextWall;
+    }
+    private bool ableToBuildStair() {
+        return Time.time > nextStair;
     }
 
     private void crouch() {
@@ -121,6 +159,24 @@ public class BugConfig {
     public GameObject bugL;
     public Transform bugSpawnPoint;
     public float shotDelay = 0.0F;
+}
+
+[System.Serializable]
+public class PlatformConfig {
+    public GameObject platformFlat;
+    public GameObject platformWall;
+    public GameObject platformStairR;
+    public GameObject platformStairL;
+
+    public Transform platformRoofSpawnPoint;
+    public Transform platformFloorSpawnPoint;
+    public Transform platformWallSpawnPoint;
+    public Transform platformStairSpawnPoint;
+
+    public float spawnRoofDelay = 0.0F;
+    public float spawnFloorDelay = 0.0F;
+    public float spawnWallDelay = 0.0F;
+    public float spawnStairDelay = 0.0F;
 }
 
 public class PlayerAnimator {
