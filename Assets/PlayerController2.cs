@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BirdDogGames.PaperDoll;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController2 : MonoBehaviour {
 
     [SerializeField] private DollInstance player = null;
     [SerializeField] private float moveSpeed = 15F;
@@ -32,11 +32,10 @@ public class PlayerController : MonoBehaviour {
 
         timeBeforeLand = airboneTime;
         StartCoroutine(getInput());
-
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("trigger");
+        Debug.Log("trigger2");
         timeBeforeLand = airboneTime;
     }
 
@@ -47,14 +46,14 @@ public class PlayerController : MonoBehaviour {
         while (true) {
             if (timeBeforeLand > 0) {
 
-                if (Input.GetKey("t")) {
+                if (Input.GetKey(KeyCode.UpArrow)) {
                     jump();
                     timeBeforeLand--;
 
-                } else if (Input.GetKey("f") || Input.GetKey("h")) {
+                } else if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) {
                     move();
 
-                } else if (Input.GetKeyUp("t") || Input.GetKeyUp("f") || Input.GetKeyUp("h")) {
+                } else if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)) {
                     idle();
                 }
             }
@@ -67,21 +66,20 @@ public class PlayerController : MonoBehaviour {
                 continue;
             }
 
-            if (Input.GetKeyDown("1")) {
+            if (Input.GetKeyDown("k")) {
                 buildRoof();
-
-            } else if (Input.GetKeyDown("2")) {
+            } else if (Input.GetKeyDown("l")) {
                 buildFloor();
 
-            } else if (Input.GetKeyDown("3")) {
+            } else if (Input.GetKeyDown(";")) {
                 buildWall();
 
-            } else if (Input.GetKeyDown("4")) {
+            } else if (Input.GetKeyDown("'")) {
                 buildStair();
 
-            } else if (Input.GetKey("space") && ableToAttack()) {
+            } else if (Input.GetKey(KeyCode.RightControl) && ableToAttack()) {
                 attack();
-            } else if (Input.GetKey(KeyCode.LeftShift) && ableToAttack()) {
+            } else if (Input.GetKey(KeyCode.RightShift) && ableToAttack()) {
                 ultiAttack();
             }
 
@@ -91,7 +89,7 @@ public class PlayerController : MonoBehaviour {
     }
     private void move() {
 
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveHorizontal = Input.GetAxis("Horizontal2");
         Vector2 movement = new Vector2(moveHorizontal, -0.8F);
         rigidBody.velocity = movement * moveSpeed;
 
@@ -102,8 +100,8 @@ public class PlayerController : MonoBehaviour {
     private void jump() {
 
         // Set movement
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
+        float moveHorizontal = Input.GetAxis("Horizontal2");
+        float moveVertical = Input.GetAxis("Vertical2");
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rigidBody.velocity = movement * jumpSpeed;
 
@@ -235,75 +233,5 @@ public class PlayerController : MonoBehaviour {
 
     private void noMovement() {
         rigidBody.velocity = new Vector2(0, 0);
-    }
-}
-
-[System.Serializable]
-public class BugConfig {
-    public GameObject bugR;
-    public GameObject bugL;
-    public Transform bugSpawnPoint;
-    public float shotDelay = 0.2F;
-}
-
-[System.Serializable]
-public class PlatformConfig {
-    public GameObject platformFlat;
-    public GameObject platformWall;
-    public GameObject platformStairR;
-    public GameObject platformStairL;
-
-    public Transform platformRoofSpawnPoint;
-    public Transform platformFloorSpawnPoint;
-    public Transform platformWallSpawnPoint;
-    public Transform platformStairSpawnPoint;
-
-    public float spawnRoofDelay = 0.3F;
-    public float spawnFloorDelay = 0.3F;
-    public float spawnWallDelay = 0.3F;
-    public float spawnStairDelay = 0.3F;
-}
-
-public class PlayerAnimator {
-    private string playerIdle = "dummy_idle_001";
-    private string playerWalk = "dummy_run_001";
-    private string playerJump = "dummy_jump_001";
-    private string playerFall = "dummy_fall_001";
-    private string playerAttack = "dummy_atk_punch_fast_001";
-    private string playerCrouch = "dummy_crouch_001";
-    private string playerImpact = "dummy_impact_001";
-
-    private DollInstance player;
-
-    public PlayerAnimator(DollInstance player) {
-        this.player = player;
-    }
-
-    public void AnimateIdle() {
-        this.player.view.AnimationName = playerIdle;
-    }
-
-    public void AnimateWalk() {
-        this.player.view.AnimationName = playerWalk;
-    }
-
-    public void AnimateJump() {
-        this.player.view.AnimationName = playerJump;
-    }
-
-    public void AnimateFall() {
-        this.player.view.AnimationName = playerFall;
-    }
-
-    public void AnimateAttack() {
-        this.player.view.AnimationName = playerAttack;
-    }
-
-    public void AnimateCrouch() {
-        this.player.view.AnimationName = playerCrouch;
-    }
-
-    public void AnimateImpact() {
-        this.player.view.AnimationName = playerImpact;
     }
 }
