@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,7 @@ public class BugController : MonoBehaviour {
     [SerializeField] private float lifetime = 3.0F;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         Destroy(this.gameObject, lifetime);
     }
 
@@ -31,15 +31,15 @@ public class BugController : MonoBehaviour {
             print("game over bitch");
 
             string loserName = other.gameObject.name;
-            Debug.Log(loserName);
-
-            if (loserName == "Player01"){
+            if (loserName == "Player01") {
                 PlayerPrefs.SetString("winner", "Winner : Player 02");
-            }
-            else{
+                CameraController.focusOn(2);
+            } else {
                 PlayerPrefs.SetString("winner", "Winner : Player 01");
+                CameraController.focusOn(1);
             }
-            SceneManager.LoadScene (sceneName:"EndScene");
+
+            GameController.GameOver = true;
         }
     }
 }

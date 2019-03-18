@@ -4,19 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-public class ButtonController : MonoBehaviour
-{
+public class ButtonController : MonoBehaviour {
     public Button startButton;
     public string onClickPlayScene = "GameScene01";
-    
-    void Start()
-    {
+
+    void Start() {
         startButton.onClick.AddListener(StartGame);
     }
 
-    void StartGame(){
+    void StartGame() {
         Debug.Log("starting game");
-        SceneManager.LoadScene (sceneName:onClickPlayScene);
+        SceneManager.LoadScene(sceneName: onClickPlayScene);
     }
 }
