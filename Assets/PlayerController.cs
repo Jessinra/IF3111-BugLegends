@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private DollInstance player = null;
     [SerializeField] private float moveSpeed = 3F;
     [SerializeField] private float jumpSpeed = 3F;
+    [SerializeField] private int airboneTime = 500;
 
     [SerializeField] private BugConfig bugConfig = null;
     [SerializeField] private PlatformConfig platformConfig = null;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     private Transform transform;
     private PlayerAnimator animator;
     private string direction = "right";
+    private int timeBeforeLand;
 
     private float nextBug = 0.0F;
     private float nextWall = 0.0F;
@@ -27,37 +29,65 @@ public class PlayerController : MonoBehaviour {
         rigidBody = player.GetComponent<Rigidbody2D>();
         transform = player.GetComponent<Transform>();
         animator = new PlayerAnimator(player);
+
+        timeBeforeLand = airboneTime;
+        StartCoroutine(getInput());
+
     }
 
-    void FixedUpdate() {
+    void OnTriggerEnter2D(Collider2D other) {
+        Debug.Log("trigger");
+        timeBeforeLand = airboneTime;
+    }
 
-        if (Input.GetKey("w")) {
-            jump();
+    void FixedUpdate() { }
 
-        } else if (Input.GetKey("a") || Input.GetKey("d")) {
-            move();
+    IEnumerator getInput() {
 
-        } else if (Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
-            idle();
+        while (true) {
+            if (timeBeforeLand > 0) {
+
+                if (Input.GetKey("w")) {
+                    jump();
+                    timeBeforeLand--;
+
+                } else if (Input.GetKey("a") || Input.GetKey("d")) {
+                    move();
+
+                } else if (Input.GetKeyUp("w") || Input.GetKeyUp("a") || Input.GetKeyUp("d")) {
+                    idle();
+                }
+            }
+
+            if (timeBeforeLand == 0) {
+                Debug.Log("out");
+                timeBeforeLand = airboneTime;
+                idle();
+                yield return new WaitForSeconds(1.5F);
+                continue;
+            }
+
+            if (Input.GetKeyDown("1")) {
+                buildRoof();
+
+            } else if (Input.GetKeyDown("2")) {
+                buildFloor();
+
+            } else if (Input.GetKeyDown("3")) {
+                buildWall();
+
+            } else if (Input.GetKeyDown("4")) {
+                buildStair();
+
+            } else if (Input.GetKey("space") && ableToAttack()) {
+                attack();
+            } else if (Input.GetKey(KeyCode.LeftShift) && ableToAttack()) {
+                ultiAttack();
+            }
+
+            yield return new WaitForFixedUpdate();
         }
 
-        if (Input.GetKeyDown("1")) {
-            buildRoof();
-
-        } else if (Input.GetKeyDown("2")) {
-            buildFloor();
-
-        } else if (Input.GetKeyDown("3")) {
-            buildWall();
-
-        } else if (Input.GetKeyDown("4")) {
-            buildStair();
-
-        } else if (Input.GetKey("space") && ableToAttack()) {
-            attack();
-        } else if (Input.GetKey(KeyCode.LeftShift) && ableToAttack()) {
-            ultiAttack();
-        }
     }
     private void move() {
 
@@ -79,6 +109,7 @@ public class PlayerController : MonoBehaviour {
 
         animator.AnimateJump();
         setFaceDirection(movement);
+
     }
 
     private void idle() {
