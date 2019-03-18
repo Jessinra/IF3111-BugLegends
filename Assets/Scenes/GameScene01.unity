@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.014328947, g: 0.053577814, b: 0.13207549, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -266,6 +266,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endSceneName: EndScene
+  delayBeforeStart: 1
+  delayBeforeEnd: 5
 --- !u!4 &191572470 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3014112516915888980, guid: 2df0e4e6aeb084646a3df4901d1470f0,
@@ -483,11 +485,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1279699727, guid: 539bacdfcecb0e34d8105e7c20320805, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.836297
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 1279699727, guid: 539bacdfcecb0e34d8105e7c20320805, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.55418
+      value: 82.4
       objectReference: {fileID: 0}
     - target: {fileID: 1279699727, guid: 539bacdfcecb0e34d8105e7c20320805, type: 3}
       propertyPath: m_LocalPosition.z
@@ -788,8 +790,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2038329530}
+  - component: {fileID: 2038329531}
   m_Layer: 0
-  m_Name: EndingGameController
+  m_Name: GameController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -809,6 +812,21 @@ Transform:
   m_Father: {fileID: 1756347188}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038329531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038329529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a3a51d1997be4c4c91aea812d63f07d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endSceneName: EndScene
+  delayBeforeStart: 6
+  delayBeforeEnd: 5
 --- !u!4 &2128960622
 Transform:
   m_ObjectHideFlags: 0
@@ -1196,7 +1214,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2355447934931479061}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -13.5}
+  m_LocalPosition: {x: 24.136295, y: -56.24582, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2355447934627214965}
@@ -1566,7 +1584,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3222986316799789242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -13.5}
+  m_LocalPosition: {x: -32.163704, y: -55.84582, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3222986317829674202}
@@ -1849,12 +1867,12 @@ PrefabInstance:
     - target: {fileID: 4920842381686810237, guid: 64881868317ea934bb1e280b4d3621ed,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.836297
+      value: -22.3
       objectReference: {fileID: 0}
     - target: {fileID: 4920842381686810237, guid: 64881868317ea934bb1e280b4d3621ed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 26.754179
+      value: 83
       objectReference: {fileID: 0}
     - target: {fileID: 4920842381686810237, guid: 64881868317ea934bb1e280b4d3621ed,
         type: 3}
@@ -1925,7 +1943,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &5458254189105365519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,7 +1961,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5588744126814900494
 Transform:
   m_ObjectHideFlags: 0
