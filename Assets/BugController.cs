@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BugController : MonoBehaviour {
 
@@ -28,6 +29,17 @@ public class BugController : MonoBehaviour {
             Destroy(this.gameObject);
 
             print("game over bitch");
+
+            string loserName = other.gameObject.name;
+            Debug.Log(loserName);
+
+            if (loserName == "Player01"){
+                PlayerPrefs.SetString("winner", "Winner : Player 02");
+            }
+            else{
+                PlayerPrefs.SetString("winner", "Winner : Player 01");
+            }
+            SceneManager.LoadScene (sceneName:"EndScene");
         }
     }
 }
