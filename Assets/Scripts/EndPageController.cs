@@ -29,7 +29,7 @@ public class EndPageController : MonoBehaviour {
         UnityWebRequest logger = UnityWebRequest.Get("https://us-central1-if3111-smartdoor.cloudfunctions.net/bugLegendHistoryLogger?name=" + name+"&score=100");
         yield return logger.SendWebRequest();
 
-        Debug.Log("sendig to firebase " + name);
+        Debug.Log("sending to firebase " + name);
         SceneManager.LoadScene(sceneName: "TitleScene");
 
         yield return new WaitForSeconds(0);

@@ -31,7 +31,11 @@ public class BugController : MonoBehaviour {
             print("game over bitch");
 
             string loserName = other.gameObject.name;
+
+            Debug.Log(loserName);
             if (loserName == "Player01") {
+                Debug.Log("here");
+
                 PlayerPrefs.SetString("winner", "Winner : Player 02");
                 CameraController.focusOn(2);
             } else {
